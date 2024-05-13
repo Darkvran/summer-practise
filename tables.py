@@ -20,6 +20,7 @@ def replaceCols(table, col1,col2):
 
 
 def genHtmlTable(table):
+    table.style
     result = table.to_html(index=False)
     result = result.replace('NaN', '')
     return result
