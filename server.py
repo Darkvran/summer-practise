@@ -3,12 +3,12 @@ from tables import *
 from checkpath import *
 from jinja2 import Environment, FileSystemLoader
 
-file_loader=FileSystemLoader('templates')
+file_loader=FileSystemLoader(os.path.join(checkPath(base_dir), 'templates'))
 env = Environment(loader=file_loader)
-
 ALLOWED_EXTENSIONS = {'ods', 'xml'}
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=os.path.join(checkPath(base_dir), 'static'),
+        template_folder=os.path.join(checkPath(base_dir), 'templates'))
 
 def tableManipulations(filename, colToReplace1, colToReplace2):
     table = readEx(filename)
@@ -17,6 +17,7 @@ def tableManipulations(filename, colToReplace1, colToReplace2):
     return genHtmlTable(table)
 @app.route("/")
 def indexhtml():
+    print(os.path.join(checkPath(base_dir), 'static'))
     return render_template("index.html")
 @app.route('/static/&lt;path:path&gt;')
 def send_static(path):
@@ -40,6 +41,6 @@ def upload_file():
         if file and allowed_file(file.filename):
             #return '<!DOCTYPE html> <html lang="ru"><head><title>'+file.filename +'</title><meta charset="utf-8"> <style>table {border-collapse:collapse;}</style> </head><body>' + tableManipulations(file.filename, 'Имя', "Фамилия") + '</body></html>'
             tm = env.get_template('upload.html')
-            table = tableManipulations(file.filename, 'Имя', "Фамилия")
+            table = tableManipulations(file, 'Имя', "Фамилия")
             return tm.render(file = file, table= table)
         return render_template("index.html")
