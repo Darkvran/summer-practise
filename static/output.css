@@ -1017,3 +1017,21 @@ video {
     --tw-ring-color: rgb(22 101 52 / var(--tw-ring-opacity));
   }
 }
+
+.text-slate-100{
+  color: rgb(241 245 249);
+}
+
+.flex-col{
+  flex-direction: column;
+}
+
+footer{
+  text-align: center;
+  margin-top: auto;
+  padding: 13px;
+}
+
+body {
+  min-height: 100vh;
+}

@@ -23,4 +23,6 @@ def genHtmlTable(table):
     table.style
     result = table.to_html(index=False)
     result = result.replace('NaN', '')
+    result = result.replace('.', ',')
+    result = result.replace(',ru', '.ru')
     return result
